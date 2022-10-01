@@ -3,7 +3,7 @@ const fs = require("fs");
 const url = require("url")
 
 
-// a really horrible bodged compression algorithm that only works on 2 characters
+// basic lossy compression
 function rlexc(data) {
     for(var i=0; i<data.length; i++) {
         if(data[i] == data[i + 1] && data[i] == 'l') {
@@ -17,10 +17,9 @@ function rlexc(data) {
 function rlexd(data) {
     for(var i=0; i<data.length; i++) {
         if(data[i] == "{") {
-            ret = data.replace(data, 'l')
-
+            ret1 = data.replace('{', 'l')
+            ret = ret1.replace("{", 'l')
         }
-        console.log(data)
     }
 
     return ret
@@ -58,7 +57,7 @@ function Read() {
 // http
 http.createServer( (req, res) => {
 
-    input_data = rlexc("ll")
+    input_data = rlexc("hello")
     Write(input_data);
 
     raw_output = Read();
